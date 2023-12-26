@@ -32,7 +32,7 @@ for tc in range(t):
     while q:
         y,x,c = q.popleft()
         for i in range(4):
-            if flag ==1:
+            if flag ==1: # 플래그 이쪽에 넣지 않아서 시간이 들었다 flag를 사용하는 경우 상위 For이나 while 부분을 잘 확인하자
                 break
             dx = x + dxl[i]
             dy = y + dyl[i]
@@ -44,7 +44,7 @@ for tc in range(t):
                     q.append([dy,dx,0])
                 if c != 0:
                     if arr[dy][dx] =='.':
-                        if dy == 0 or dy == n-1 or dx == 0 or dx == m-1:
+                        if dy == 0 or dy == n-1 or dx == 0 or dx == m-1: #경계면을 사용할 때는 이런 코드를 사용하자
                             rs = c
                             flag = 1
                             break
