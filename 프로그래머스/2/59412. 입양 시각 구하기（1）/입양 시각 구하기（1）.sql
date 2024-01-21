@@ -1,6 +1,5 @@
--- 코드를 입력하세요
-SELECT DATE_FORMAT(DATETIME,'%H') AS HOUR,COUNT(*) AS COUNT
-FROM ANIMAL_OUTS
-WHERE DATE_FORMAT(DATETIME,'%H') BETWEEN 9 AND 19
-GROUP BY DATE_FORMAT(DATETIME,'%H')
-ORDER BY 1
+SELECT to_number(to_char(datetime, 'hh24')) as hour, count(to_char(datetime, 'hh24')) as count
+from animal_outs
+where to_char(datetime, 'hh24') between 9 and 19
+group by to_char(datetime, 'hh24')
+order by hour
