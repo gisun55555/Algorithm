@@ -29,7 +29,7 @@ for i in range(1,n):
     if h_x - i < 0:
         break
     if arr[h_y][h_x-i]=='*':
-        # arr[h_y][h_x-i]='_'
+        arr[h_y][h_x-i]='_'
         cnt1+=1
     else:
         break
@@ -38,7 +38,7 @@ for i in range(1,n):
     if h_x + i >= n:
         break
     if arr[h_y][h_x+i]=='*':
-        # arr[h_y][h_x-i]='_'
+        arr[h_y][h_x+i]='_'
         cnt2+=1
     else:
         break
@@ -49,7 +49,7 @@ for i in range(1,n):
     if h_y + i >= n:
         break
     if arr[h_y+i][h_x]=='*':
-        # arr[h_y+i][h_x]='_'
+        arr[h_y+i][h_x]='_'
         cnt3+=1
     else:
         break
@@ -58,7 +58,7 @@ for i in range(1,n):
     if h_y + cnt3 + i >= n or h_x - 1 < 0:
         break
     if arr[h_y+cnt3+i][h_x-1]=='*':
-        # arr[h_y+cnt3+i][h_x-1]='_'
+        arr[h_y+cnt3+i][h_x-1]='_'
         cnt4+=1
     else:
         break
@@ -68,7 +68,7 @@ for i in range(1,n):
     if h_y + cnt3 + i >= n or h_x + 1 >= n:
         break
     if arr[h_y+cnt3+i][h_x+1]=='*':
-        # arr[h_y+cnt3+i][h_x+1]='_'
+        arr[h_y+cnt3+i][h_x+1]='_'
         cnt5+=1
     else:
         break
