@@ -1,17 +1,24 @@
 def solution(numbers, target):
     
-    def dfs(index, current_sum):
-        if index == len(numbers):
-            if current_sum == target:
-                return 1
-            else:
-                return 0
+    global count
+    count =0
+    
+    
+    
+    def dfs(level,n,sum):
+        global count
         
-        add = dfs(index +1, current_sum + numbers[index])
-        subtract = dfs(index +1, current_sum - numbers[index])
         
-        return add + subtract
+        if level==len(numbers):
+            if sum ==target:
+                count+=1
+            return
+        
+        dfs(level+1,n+1,sum+numbers[n])
+        dfs(level+1,n+1,sum-numbers[n])
+        return
+        
             
-            
-        
-    return dfs(0,0)
+    dfs(0,0,0)
+
+    return count
