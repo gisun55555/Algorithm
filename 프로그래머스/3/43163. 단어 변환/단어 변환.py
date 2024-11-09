@@ -1,36 +1,44 @@
 def solution(begin, target, words):
-    if target not in words:
-        return 0
-
-    used = [False] * len(words)
     
-    min_steps = [float('inf')]
+    min_cnt=[float('inf')]
     
-    def check_difference(word1, word2):
-        difference_count = 0
-        for i in range(len(word1)):
-            if word1[i] != word2[i]:
-                difference_count += 1
+    used = [0]*len(words)
+    
+    
+    def check(x,y):
+        cnt=0
+        for i in range(len(x)):
+            if x[i]==y[i]:
+                cnt+=1
+        if cnt == len(begin)-1:
+            return 1
+        else:
+            return 0
+    
+    def dfs(x,cnt):
         
-        return difference_count == 1
-
-    def dfs(current_word, step_count):
-        if current_word == target:
-            min_steps[0] = min(min_steps[0], step_count)
-            return
+        if x==target:
+            if min_cnt[0]>cnt:
+                min_cnt[0]=cnt
+            return 
+        
         
         for i in range(len(words)):
-            if used[i]:
+            if used[i]==1:
                 continue
+            if check(x,words[i])==1:
+                used[i]=1
+                dfs(words[i],cnt+1)
+                used[i]=0
+                
             
-            if check_difference(current_word, words[i]):
-                used[i] = True
-                dfs(words[i], step_count + 1)
-                used[i] = False
-
-    dfs(begin, 0)
-    
-    if min_steps[0] == float('inf'):
-        return 0
+        
+        
+    dfs(begin,0)    
+    if min_cnt[0]==float('inf'):
+        answer=0
     else:
-        return min_steps[0]
+        answer=min_cnt[0]
+    
+    
+    return answer
