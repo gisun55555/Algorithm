@@ -1,22 +1,24 @@
+from collections import deque
 def solution(n, computers):
     
     visited = [0] * n
     print(visited)
     
-    def dfs(current):
-        visited[current] =1
+    def bfs(current):
+        q=deque([current])
         
-        for i in range(n):
-            is_connect=computers[current][i]
-            if is_connect ==1:
-                if visited[i] ==0:
-                    dfs(i)
-    answer = 0
-    
+        while q:
+            x= q.popleft()
+            visited[x]=1
+            for i in range(n):
+                if computers[x][i]==1:
+                    if visited[i]==0:
+                        q.append(i)
+    answer=0
     for i in range(n):
         if visited[i]==0:
             answer +=1
-            dfs(i)
+            bfs(i)
         
         
     
