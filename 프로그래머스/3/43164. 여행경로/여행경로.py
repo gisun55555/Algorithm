@@ -1,33 +1,30 @@
+from collections import defaultdict
+
+
 def solution(tickets):
-    tickets.sort()
-    # print(tickets)
-    result = []  
-    target = [""] * (len(tickets) + 1)  
-    used = [0] * len(tickets)  
-
-    def dfs(end, num):
-        if num == len(tickets):  
-            result.append(target[:])  
-            return
-
-        for i in range(len(tickets)):
-            if used[i] == 1: 
-                continue
-            if tickets[i][0] == end:  
-                used[i] = 1 
-                target[num + 1] = tickets[i][1]  
-                dfs(tickets[i][1], num + 1)  
-                target[num + 1] = "" 
-                used[i] = 0  
-
-    for i in range(len(tickets)):
-        if tickets[i][0] == 'ICN':  
-            used[i] = 1  
-            target[0] = 'ICN'  
-            target[1] = tickets[i][1]  
-            dfs(tickets[i][1], 1)  
-            used[i] = 0 
     
-    print(result)
+    graph = defaultdict(list)
+    for a, b in tickets:
+        graph[a].append(b)
+        # print(graph)
+    
+    for key in graph:
+        graph[key].sort(reverse=True)
+        # print(graph)
+    
+    route = []
 
-    return result[0]
+    def dfs(airport):
+        while graph[airport]:
+            print(graph)
+            next_airport = graph[airport].pop()
+            dfs(next_airport)
+        route.append(airport)
+        print(route)
+
+    dfs("ICN")
+    return route[::-1]
+
+
+print(solution([["ICN", "JFK"], ["HND", "IAD"], ["JFK", "HND"]]))
+print(solution([["ICN", "SFO"], ["ICN", "ATL"], ["SFO", "ATL"], ["ATL", "ICN"], ["ATL", "SFO"]]))
