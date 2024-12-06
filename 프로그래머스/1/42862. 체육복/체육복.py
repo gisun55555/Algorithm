@@ -1,14 +1,12 @@
 def solution(n, lost, reserve):
     answer=n
     lst = [1 for i in range(n+2)]
-    # print(lst)
     
     for i in reserve:
         lst[i]=2
     
     for i in lost:
         lst[i]-=1
-    # print(lst)
     
     
     for i in range(1,len(lst)):
@@ -25,12 +23,5 @@ def solution(n, lost, reserve):
             answer -=1
         
                 
-            
-    
-    
-        
-    
-    
-    
     
     return answer
