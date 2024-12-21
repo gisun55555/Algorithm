@@ -1,35 +1,36 @@
-dij = [0, -1, 0, 1, 0]
-rects = [[0] * 102 for _ in range(102)]
-
-
-def is_corner(x, y):
-    if not rects[y][x] == 1: return False
-    for i in range(y - 1, y + 2):
-        for j in range(x - 1, x + 2):
-            if not rects[i][j]: return True
-    return False
-
-
 def solution(rectangle, characterX, characterY, itemX, itemY):
-    for square in rectangle:
-        ix, iy, ex, ey = square
-        for i in range(iy * 2, ey * 2 + 1):
-            for j in range(ix * 2, ex * 2 + 1):
-                rects[i][j] = 1
+    from collections import deque
 
-    q = [(0, 0) for _ in range(800)]
-    q[0] = (characterX * 2, characterY * 2)
-    rects[q[0][1]][q[0][0]] = 2  # 사각형과 구분한 visited 처리를 위해 2 더해줌
+    scale = 2  
+    max_size = 102  
+    grid = [[0] * max_size for _ in range(max_size)]
 
-    ptr, tg = 1, 0
-    while ptr != tg:
-        qx, qy = q[tg][0], q[tg][1]
-        for k in range(4):
-            tx, ty = qx + dij[k], qy + dij[k + 1]
-            if is_corner(tx, ty):
-                q[ptr] = (tx, ty)
-                rects[ty][tx] = rects[qy][qx] + 0.5  # 2배율이므로 거리를 0.5씩 가산
-                ptr += 1
-        tg += 1
+  
+    for rec in rectangle:
+        x1, y1, x2, y2 = map(lambda x: x * scale, rec)
+        for x in range(x1, x2 + 1):
+            for y in range(y1, y2 + 1):
+                if x1 < x < x2 and y1 < y < y2:
+                    grid[x][y] = -1 
+                elif grid[x][y] != -1:
+                    grid[x][y] = 1  
 
-    return rects[itemY * 2][itemX * 2] - 2  # 최종 계산에서 2를 차감
+    start = (characterX * scale, characterY * scale)
+    end = (itemX * scale, itemY * scale)
+    queue = deque()
+    queue.append((start[0], start[1], 0))
+    visited = [[0] * max_size for _ in range(max_size)]
+    visited[start[0]][start[1]] = 1
+
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    while queue:
+        x, y, dist = queue.popleft()
+        if (x, y) == end:
+            return dist // 2  
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < max_size and 0 <= ny < max_size:
+                if grid[nx][ny] == 1 and not visited[nx][ny]:
+                    visited[nx][ny] = 1
+                    queue.append((nx, ny, dist + 1))
+    return -1
