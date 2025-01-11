@@ -1,23 +1,22 @@
-function solution(people, limit) {
+// 단순 구현
+
+
+function solution(people,limit){
+    people.sort((a,b)=>a-b)
+    let count =0
     
-    people.sort((a,b)=> a-b)
-    let count=0
-    let i=0
-    let k=people.length-1
-    let answer=people.length
-    while(i<k){
-        if(people[i]+people[k]<=limit){
-            count+=1
-            i+=1
-            k+=-1
-            continue
+    while(people.length){
+        
+        if(people[0]+people[people.length-1]<=limit){
+            people.shift()
+            people.pop()
+            
+        } else {
+            people.pop()
         }
-        
-        k+=-1
-        
+        count ++
     }
     
-    return answer-count;
+    return count
+    
 }
-
-
