@@ -1,22 +1,36 @@
 function solution(m, n, puddles) {
-    const MOD = 1000000007;
-    let dp = Array.from({ length: n + 1 }, () => Array(m + 1).fill(0));
-
-    puddles.forEach(([x, y]) => dp[y][x] = -1);
-
+    const Mod = 1000000007
+    
+    const dp = Array.from({length:n+1},()=> Array(m+1).fill(0))
     dp[1][1] = 1;
-
-    for (let i = 1; i <= n; i++) {
-        for (let j = 1; j <= m; j++) {
-            if ((i === 1 && j === 1) || dp[i][j] === -1) continue;
-
-            if (dp[i - 1][j] !== -1) dp[i][j] += dp[i - 1][j];
-
-            if (dp[i][j - 1] !== -1) dp[i][j] += dp[i][j - 1];
-
-            dp[i][j] %= MOD;
+    
+     const puddlesArray = Array.from({length:n+1},()=> Array(m+1).fill(0))
+     // console.log(dp)
+     
+     for(i=0;i<puddles.length;i++){
+         puddlesArray[puddles[i][1]][puddles[i][0]]=1
+         
+     }
+    
+    for(let i=1;i<=m;i++){
+        
+        for(let j=1;j<=n;j++){
+            if(puddlesArray[j][i]===1) continue
+            dp[j][i] += dp[j-1][i]+dp[j][i-1]
+            dp[j][i] %= Mod
+            
+            
+            
+            
         }
+        
     }
-
-    return dp[n][m];
+    
+    
+    
+    
+    
+    
+    var answer = dp[n][m]
+    return answer;
 }
